@@ -1,0 +1,7 @@
+const router = require('express').Router()
+
+router.use('/users', require('./users'))
+router.use('/transactions', require('./transaction'))
+
+
+module.exports = router
