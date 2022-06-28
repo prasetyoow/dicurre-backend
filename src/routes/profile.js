@@ -1,11 +1,7 @@
-const profile = require('express').Router()
+const profile = require('express').Router();
 
-profile.get('/', (req, res) => {
-    return res.json({
-        success: true,
-        message: 'List all profile'
-    })
-})
+const profileController = require('../controllers/profile');
 
+profile.get('/', profileController.getAllProfile);
 
-module.exports = profile
+module.exports = profile;
