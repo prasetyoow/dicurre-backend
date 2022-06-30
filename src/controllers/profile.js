@@ -21,3 +21,10 @@ exports.editProfile = (req, res) => {
     return response(res, 'Profile just got edited', results[0]);
   });
 };
+
+exports.deleteProfile = (req, res) => {
+  const {id} = req.params;
+  profileModel.deleteProfile(id, req.body, (results) => {
+    return response(res, 'Profile deleted!', results[0]);
+  });
+};
