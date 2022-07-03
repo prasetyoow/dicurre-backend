@@ -1,6 +1,7 @@
 const response = require('../helpers/standardResponse');
-
+const errorResponse = require('../helpers/errorResponse');
 const transactionTypeModel = require('../models/transaction_type');
+const { validationResult } = require('express-validator');
 
 exports.getAllTransactionType = (req, res) => {
   transactionTypeModel.getAllTransactionType((results) => {
@@ -9,15 +10,37 @@ exports.getAllTransactionType = (req, res) => {
 };
 
 exports.createTransactionType = (req, res) => {
-  transactionTypeModel.createTransactionType(req.body, (results) => {
-    return response(res, 'Transaction type created!', results[0]);
+  const validation = validationResult(req);
+
+  if (!validation.isEmpty()) {
+    return response(res, 'There is an error', validation.array(), 400);
+  }
+
+  transactionTypeModel.createTransactionType(req.body, (err, results) => {
+    if (err) {
+      return errorResponse(err, res);
+    
+    } else {
+      return response(res, 'Transaction type created!', results[0]);
+    }
   });
 };
 
 exports.editTransactionType = (req, res) => {
   const {id} = req.params;
-  transactionTypeModel.editTransactionType(id, req.body, (results) => {
-    return response(res, 'Transaction type just got edited', results[0]);
+  const validation = validationResult(req);
+
+  if (!validation.isEmpty()) {
+    return response(res, 'There is an error', validation.array(), 400);
+  }
+
+  transactionTypeModel.editTransactionType(id, req.body, (err, results) => {
+    if (err) {
+      return errorResponse(err, res);
+    
+    } else {
+      return response(res, 'Transaction type just got edited', results[0]);
+    }
   });
 };
 

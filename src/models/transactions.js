@@ -22,7 +22,7 @@ exports.editTransactions = (data, id, cb) => {
   });
 };
 
-exports.deleteTransactions = (data, id, cb) => {
+exports.deleteTransactions = (id, cb) => {
   const query = 'DELETE FROM transaction WHERE id=$1 RETURNING *';
   const value = [id];
   db.query(query, value, (err, res) => {

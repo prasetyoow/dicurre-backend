@@ -22,9 +22,9 @@ exports.editTransactionType = (data, id, cb) => {
   });
 };
 
-exports.deleteTransactionType = (data, id, cb) => {
+exports.deleteTransactionType = (id, cb) => {
   const query = 'DELETE FROM transaction_type WHERE id=$1 RETURNING *';
-  const value = [data.name, data.description, id];
+  const value = [id];
   db.query(query, value, (err, res) => {
     cb(res.rows);
   });

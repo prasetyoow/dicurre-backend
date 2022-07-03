@@ -22,10 +22,18 @@ exports.editProfile = (data, id, cb) => {
   });
 };
 
-exports.deleteProfile = (data, id, cb) => {
+exports.deleteProfile = (id, cb) => {
   const query = 'DELETE FROM users WHERE id=$1 RETURNING *';
   const value = [id];
   db.query(query, value, (err, res) => {
-    cb(res, res);
+    cb(res.rows);
+  });
+};
+
+exports.searchProfileById = (id, cb) => {
+  const q = 'SELECT * FROM profile WHERE id=$1';
+  const val = [id];
+  db.query(q, val, (err, res)=>{
+    cb(res.rows);
   });
 };

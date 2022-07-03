@@ -22,7 +22,7 @@ exports.editUser = (data, id, cb) => {
   });
 };
 
-exports.deleteUser = (data, id, cb) => {
+exports.deleteUser = (id, cb) => {
   const query = 'DELETE FROM users WHERE id=$1 RETURNING *';
   const value = [id];
   db.query(query, value, (err, res) => {
