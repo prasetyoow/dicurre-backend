@@ -10,7 +10,11 @@ exports.createProfile = (data, cb) => {
   const query = 'INSERT INTO profile (fullname, phone_number, balance, picture, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
   const value = [data.fullname, data.phone_number, data.balance, data.picture, data.user_id];
   db.query(query, value, (err, res) => {
-    cb(res.rows);
+    if (res) {
+      cb(err, res.rows);
+    } else {
+      cb(err);
+    }
   });
 };
 

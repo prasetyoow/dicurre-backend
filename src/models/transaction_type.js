@@ -10,7 +10,11 @@ exports.createTransactionType = (data, cb) => {
   const query = 'INSERT INTO transaction_type (name, description) VALUES ($1, $2) RETURNING *';
   const value = [data.name, data.description];
   db.query(query, value, (err, res) => {
-    cb(res.rows);
+    if (res) {
+      cb(err, res.rows);
+    } else {
+      cb(err);
+    }
   });
 };
 

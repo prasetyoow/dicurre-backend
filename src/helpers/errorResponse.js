@@ -20,6 +20,13 @@ const errorReponse = (err, res) => {
   }
   // end
 
+  // transaction
+  if (err.code === 'amount' && err.detail.includes('not-null')) {
+    const errRes = errorHandling('Amount cant be null', 'amount');
+    return response(res, 'Error', errRes, 400);
+  }
+  // end
+  
   // profile
   if (err.code === '23505' && err.detail.includes('user_id')) {
     const errRes = errorHandling('User ID already exists', 'User id');
