@@ -20,6 +20,13 @@ exports.getUserById = (id, cb) => {
   });
 };
 
+exports.searchSortUsers = (column_name, keyword, sort_type, limit=parseInt(LIMIT_DATA), offset=0, cb)=>{
+  db.query(`SELECT * FROM users WHERE ${column_name} LIKE '%${keyword}%' ORDER BY id ${sort_type} LIMIT $1 OFFSET $2`, [limit, offset], (err, res)=>{
+    cb(res.rows);
+  });
+};
+
+
 exports.createUser = (data, cb) => {
   const query = 'INSERT INTO users(email, password, username, pin) VALUES ($1, $2, $3, $4) RETURNING *';
   const value = [data.email, data.password, data.username, data.pin];

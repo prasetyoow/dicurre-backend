@@ -6,12 +6,14 @@ const bcrypt = require('bcrypt');
 const {LIMIT_DATA} = process.env;
 
 exports.getAllUsers = (req, res) => {
-  const {search = '', limit=parseInt(LIMIT_DATA), page=1} = req.query;
-  const offset = (page-1) * limit;
+  const {search = '', limit = parseInt(LIMIT_DATA), page = 1} = req.query;
+  const offset = (page - 1) * limit;
   userModel.getAllUsers(search, limit, offset, (err, results) => {
     if (results.length < 1) {
       return res.redirect('/404');
     }
+
+
     const pageInfo = {};
 
     userModel.countAllUsers(search, (err, totalData) => {
@@ -22,6 +24,16 @@ exports.getAllUsers = (req, res) => {
       pageInfo.prevPage = pageInfo.currentPage > 1 ? pageInfo.currentPage - 1 : null;
       return response(res, 'List all users', results, pageInfo);
     });
+  });
+};
+
+exports.sortUsers = (req, res ) => {
+  const {column_name = '', search = '', sort_type = 'ASC', limit = parseInt(LIMIT_DATA), page = 1 } = req.query;
+  const offset = (page - 1) * limit;
+  userModel.sortUsers(column_name, search, sort_type, limit, offset, (results) => {
+    if (results.length < 1) {
+      return res.redirect('/404');
+    }
   });
 };
 

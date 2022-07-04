@@ -4,8 +4,8 @@ const transactionsModel = require('../models/transactions');
 const errorResponse = require('../helpers/errorResponse');
 
 exports.getAllTransactions = (req, res) => {
-  transactionsModel.getAllTransactions((results) => {
-    return response(res, 'Message from standard response', results);
+  transactionsModel.getAllTransactions((err, results) => {
+    return response(res, 'List all transactions', results);
   });
 };
 
