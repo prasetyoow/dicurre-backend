@@ -19,13 +19,6 @@ const errorReponse = (err, res) => {
     return response(res, 'Error', errRes, null, 400);
   }
   // end
-
-  // transaction
-  if (err.code === 'amount' && err.detail.includes('not-null')) {
-    const errRes = errorHandling('Amount cant be null', 'amount');
-    return response(res, 'Error', errRes, null, 400);
-  }
-  // end
   
   // profile
   if (err.code === '23505' && err.detail.includes('user_id')) {
@@ -33,7 +26,7 @@ const errorReponse = (err, res) => {
     return response(res, 'Error', errRes, null, 400);
   }
 
-  if (err.code === '23505' && err.detail.includes('number')) {
+  if (err.code === '23505' && err.detail.includes('phone_number')) {
     const errRes = errorHandling('Phone number already exists', 'User id');
     return response(res, 'Error', errRes, null, 400);
   }

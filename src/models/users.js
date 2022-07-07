@@ -15,8 +15,10 @@ exports.countAllUsers = (keyword, cb) => {
 };
 
 exports.getUserById = (id, cb) => {
-  db.query('SELECT * FROM users WHERE id=$1', [id], (err, res) => {
-    cb(err, res);
+  const q = 'SELECT * FROM users WHERE id=$1';
+  const val = [id];
+  db.query(q, val, (err, res)=>{
+    cb(res.rows);
   });
 };
 
@@ -40,11 +42,15 @@ exports.createUser = (data, cb) => {
 };
 
 
-exports.editUser = (data, id, cb) => {
+exports.editUser = (id, data, cb) => {
   const query = 'UPDATE users SET email=$1, password=$2, username=$3, pin=$4 WHERE id=$5 RETURNING *';
   const value = [data.email, data.password, data.username, data.pin, id];
   db.query(query, value, (err, res) => {
-    cb(res.rows);
+    if (res) {
+      cb(err, res);
+    } else {
+      cb(err);
+    }
   });
 };
 
@@ -52,6 +58,6 @@ exports.deleteUser = (id, cb) => {
   const query = 'DELETE FROM users WHERE id=$1 RETURNING *';
   const value = [id];
   db.query(query, value, (err, res) => {
-    cb(res, res);
+    cb(res.rows);
   });
 };

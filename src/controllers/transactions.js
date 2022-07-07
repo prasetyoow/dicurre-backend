@@ -4,10 +4,19 @@ const transactionsModel = require('../models/transactions');
 const errorResponse = require('../helpers/errorResponse');
 
 exports.getAllTransactions = (req, res) => {
-  transactionsModel.getAllTransactions((err, results) => {
+  transactionsModel.getAllTransactions((results) => {
     return response(res, 'List all transactions', results);
   });
 };
+
+exports.getTransactionsById = (req, res)=>{
+  const {id} = req.params;
+  transactionsModel.getTransactionsById(id, (results)=>{
+    return response(res, 'Got the Transactions', results[0]);
+  });
+};
+
+
 
 exports.createTransactions = [
   body('time').isISO8601().withMessage('Date format invalid (ISO8601)'),
@@ -42,14 +51,14 @@ exports.editTransactions = (req, res) => {
       return errorResponse(err, res);
     
     } else {
-      return response(res, 'Transactions just got edited', results[0]);
+      return response(res, 'Transactions just got edited', results.rows);
     }
   });
 };
 
 exports.deleteTransactions = (req, res) => {
   const {id} = req.params;
-  transactionsModel.deleteTransactions(id, req.body, (results) => {
+  transactionsModel.deleteTransactions(id, (results) => {
     return response(res, 'Transactions deleted!', results[0]);
   });
 };

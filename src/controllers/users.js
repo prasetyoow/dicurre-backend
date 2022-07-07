@@ -1,8 +1,7 @@
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const errorResponse = require('../helpers/errorResponse');
 const response = require('../helpers/standardResponse');
 const userModel = require('../models/users');
-const bcrypt = require('bcrypt');
 const {LIMIT_DATA} = process.env;
 
 exports.getAllUsers = (req, res) => {
@@ -37,65 +36,45 @@ exports.sortUsers = (req, res ) => {
   });
 };
 
-exports.getUserbyId = (req, res) => {
+exports.getUserById = (req, res)=>{
   const {id} = req.params;
-  userModel.getUserbyId(id, (err, results) =>{
-    if (results.row.length > 0) {
-      return response(res, 'Detail user', results.rows[0]);
-    }
+  userModel.getUserById(id, (results)=>{
+    return response(res, 'Got the profile', results[0]);
   });
 };
 
-exports.createUser = [
-  body('email')
-    .isEmail().withMessage('Email format invalid'),
-  body('username')
-    .isLength({min: 4}).withMessage('Username length must be atleast 4 characters'),
-  body('password')
-    .isLength({min: 8}).withMessage('Password length must be atleast 8 characters')
-    .customSanitizer(async (val) => {
-      const hash = await bcrypt.hash(val, 10);
-      return hash;
-    }),
-  (req, res) => {
-    const validation = validationResult(req);
+exports.createUser = (req, res) => {
+  const validation = validationResult(req);
   
-    if (!validation.isEmpty()) {
-      return response(res, 'There is an error', validation.array(), null, 400);
-    }
+  if (!validation.isEmpty()) {
+    return response(res, 'There is an error', validation.array(), null, 400);
+  }
 
-    userModel.createUser(req.body, (err, results) => {
-      if(err) {
-        return errorResponse(err, res);
+  userModel.createUser(req.body, (err, results) => {
+    if(err) {
+      return errorResponse(err, res);
       
-      } else {
-        return response(res, 'User created!', results[0]);
-      }
-    });
-  },
-];
+    } else {
+      return response(res, 'User created!', results[0]);
+    }
+  });
+},
 
-exports.editUser =  [ 
-  body('email').isEmail().withMessage('Email format invalid'),
-  body('username').isLength({min: 4}).withMessage('Username length must be atleast 4 characters'),
-  body('password')
-    .isLength({min: 8}).withMessage('Password length must be atleast 8 characters')
-    .customSanitizer(async (val) =>{
-      const hash = await bcrypt.hash(val, 10);
-      return hash;
-    })
-];
 
-(req, res) => {
+exports.editUser =  (req, res) => {
   const {id} = req.params;
   const validation = validationResult(req);
   
   if (!validation.isEmpty()) {
-    return response(res, 'There is an error', validation.array(), 400);
+    return response(res, 'There is an error', validation.array(), null, 400);
   }
 
-  userModel.editUser(id, req.body, (results) => {
-    return response(res, 'Data updated!', results[0]);
+  userModel.editUser(id, req.body, (err, results) => {
+    if (err) {
+      return errorResponse(err, res);
+    } else {
+      return response(res, 'Data updated!', results.rows);
+    }
   });
 };
 

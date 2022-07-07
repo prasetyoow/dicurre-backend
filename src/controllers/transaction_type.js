@@ -31,7 +31,7 @@ exports.editTransactionType = (req, res) => {
   const validation = validationResult(req);
 
   if (!validation.isEmpty()) {
-    return response(res, 'There is an error', validation.array(), 400);
+    return response(res, 'There is an error', validation.array(), null, 400);
   }
 
   transactionTypeModel.editTransactionType(id, req.body, (err, results) => {
@@ -39,14 +39,14 @@ exports.editTransactionType = (req, res) => {
       return errorResponse(err, res);
     
     } else {
-      return response(res, 'Transaction type just got edited', results[0]);
+      return response(res, 'Transaction type just got edited', results.rows);
     }
   });
 };
 
 exports.deleteTransactionType = (req, res) => {
   const {id} = req.params;
-  transactionTypeModel.deleteTransactionType(id, req.body, (results) => {
+  transactionTypeModel.deleteTransactionType(id, (results) => {
     return response(res, 'Transaction type deleted!', results[0]);
   });
 };

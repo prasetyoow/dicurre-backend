@@ -18,11 +18,15 @@ exports.createTransactionType = (data, cb) => {
   });
 };
 
-exports.editTransactionType = (data, id, cb) => {
-  const query = 'UPDATE transaction_type SET name=$1, description=$2 WHERE id=$1 RETURNING *';
+exports.editTransactionType = (id, data, cb) => {
+  const query = 'UPDATE transaction_type SET name=$1, description=$2 WHERE id=$3 RETURNING *';
   const value = [data.name, data.description, id];
   db.query(query, value, (err, res) => {
-    cb(res.rows);
+    if (res) {
+      cb(err, res);
+    } else {
+      cb(err);
+    }
   });
 };
 

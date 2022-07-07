@@ -3,56 +3,56 @@ const errorResponse = require('../helpers/errorResponse');
 const response = require('../helpers/standardResponse');
 const profileModel = require('../models/profile');
 
-
 exports.getAllProfile = (req, res) => {
   profileModel.getAllProfile((results) => {
-    return response(res, 'Message from standard response', results);
+    return response(res, 'List of profiles', results);
   });
 };
 
-exports.createProfile = (req, res) => {
-  const validation = validationResult(req);
+exports.getProfileById = (req, res)=>{
+  const {id} = req.params;
+  profileModel.getProfileById(id, (results)=>{
+    return response(res, 'Got the profile', results[0]);
+  });
+};
 
+exports.createProfile = ( req, res) => {
+  const validation = validationResult(req);
   if (!validation.isEmpty()) {
     return response(res, 'There is an error', validation.array(), 400);
   }
 
-  profileModel.createProfile(req.body, (err, results) => {
+  profileModel.createProfile(req.body, req.file.filename, (err, results) => {
     if (err) {
       return errorResponse(err, res);
     
     } else {
-      return response(res, 'User created!', results[0]);
+      return response(res, 'Profile created!', results[0]);
     }
   });
 };
 
-exports.editProfile = (req, res) => {
+exports.editProfile = (req, res,) => {
   const {id} = req.params;
   const validation = validationResult(req);
 
   if (!validation.isEmpty()) {
-    return response(res, 'There is an error', validation.array(), 400);
+    return response(res, 'There is an error', validation.array(), null, 400);
   }
 
-  profileModel.editProfile(id, req.body, (err, results) => {
+  profileModel.editProfile(id, req.body, req.file.filename, (err, results) => {
     if (err) {
       return errorResponse(err, res);
+    } else {
+      return response(res, 'Profile just got edited', results.rows);
     }
-    return response(res, 'Profile just got edited', results[0]);
   });
 };
 
 exports.deleteProfile = (req, res) => {
   const {id} = req.params;
-  profileModel.deleteProfile(id, req.body, (results) => {
+  profileModel.deleteProfile(id, (results) => {
     return response(res, 'Profile deleted!', results[0]);
   });
 };
 
-exports.seacrhProfileById = (req, res)=>{
-  const {id} = req.params;
-  profileModel.searchProfileById(id, (results)=>{
-    return response(res, 'Profile search', results[0]);
-  });
-};
