@@ -17,12 +17,18 @@ exports.getProfileById = (req, res)=>{
 };
 
 exports.createProfile = ( req, res) => {
+  let filename = null;
+
+  if (req.file) {
+    filename = req.file.filename;
+  }
+  
   const validation = validationResult(req);
   if (!validation.isEmpty()) {
     return response(res, 'There is an error', validation.array(), 400);
   }
 
-  profileModel.createProfile(req.body, req.file.filename, (err, results) => {
+  profileModel.createProfile(req.body, filename, (err, results) => {
     if (err) {
       return errorResponse(err, res);
     
@@ -34,13 +40,18 @@ exports.createProfile = ( req, res) => {
 
 exports.editProfile = (req, res,) => {
   const {id} = req.params;
+  let filename = null; 
+
+  if (req.filename) {
+    filename = req.file.filename;
+  }
   const validation = validationResult(req);
 
   if (!validation.isEmpty()) {
     return response(res, 'There is an error', validation.array(), null, 400);
   }
 
-  profileModel.editProfile(id, req.body, req.file.filename, (err, results) => {
+  profileModel.editProfile(id, req.body, filename, (err, results) => {
     if (err) {
       return errorResponse(err, res);
     } else {
