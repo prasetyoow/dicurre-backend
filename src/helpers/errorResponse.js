@@ -8,7 +8,7 @@ const errorHandling = (msg, param, location = 'body') => [
   }
 ];
 
-const errorReponse = (err, res) => {
+const errorResponse = (err, res) => {
   // users
   if (err.code === '23505' && err.detail.includes('email')) {
     const errRes = errorHandling('Email already exists', 'email');
@@ -41,4 +41,4 @@ const errorReponse = (err, res) => {
   return response(res, 'Error', null, null, 400);
 };
 
-module.exports = errorReponse;
+module.exports = errorResponse;
