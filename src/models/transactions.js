@@ -33,7 +33,7 @@ exports.editTransactions = (id, data, cb) => {
   const value = [data.amount, data.receiver_id, data.sender_id, data.notes, data.time, data.type_id, id];
   db.query(query, value, (err, res) => {
     if (res) {
-      cb(err, res);
+      cb(err, res.rows);
     } else {
       cb(err);
     }

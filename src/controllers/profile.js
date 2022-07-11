@@ -42,7 +42,7 @@ exports.editProfile = (req, res,) => {
   const {id} = req.params;
   let filename = null; 
 
-  if (req.filename) {
+  if (req.file) {
     filename = req.file.filename;
   }
   const validation = validationResult(req);
@@ -51,11 +51,11 @@ exports.editProfile = (req, res,) => {
     return response(res, 'There is an error', validation.array(), null, 400);
   }
 
-  profileModel.editProfile(id, req.body, filename, (err, results) => {
+  profileModel.editProfile(id, filename, req.body,  (err, results) => {
     if (err) {
-      return errorResponse(err, res);
+      return errorResponse(res, `Failed to update: ${err.message}, null, null, 400`);
     } else {
-      return response(res, 'Profile just got edited', results.rows);
+      return response(res, 'Profile just got edited', results.rows[0]);
     }
   });
 };
@@ -66,4 +66,3 @@ exports.deleteProfile = (req, res) => {
     return response(res, 'Profile deleted!', results[0]);
   });
 };
-

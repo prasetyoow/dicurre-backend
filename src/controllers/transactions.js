@@ -48,8 +48,8 @@ exports.editTransactions = (req, res) => {
 
   transactionsModel.editTransactions(id, req.body, (err, results) => {
     if (err) {
-      return errorResponse(err, res);
-    
+      console.log(err);
+      return response(res, 'Error', null, 400);
     } else {
       return response(res, 'Transactions just got edited', results.rows);
     }

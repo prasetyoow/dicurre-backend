@@ -18,7 +18,7 @@ exports.getUserById = (id, cb) => {
   const q = 'SELECT * FROM users WHERE id=$1';
   const val = [id];
   db.query(q, val, (err, res)=>{
-    cb(res.rows);
+    cb(err, res);
   });
 };
 
@@ -77,5 +77,30 @@ exports.deleteUser = (id, cb) => {
   const value = [id];
   db.query(query, value, (err, res) => {
     cb(res.rows);
+  });
+};
+
+exports.changePassword = (id, data, cb)=>{
+  const q = 'UPDATE users SET password=$1 WHERE id=$2';
+  const val = [data.password, id];
+  db.query(q, val, (err, res)=>{
+    if (res) {
+      cb(err, res);
+    }else{
+      cb(err);
+    }
+  });
+};
+
+exports.changePin = (id, data, cb)=>{
+  const q = 'UPDATE users SET pin=$1 WHERE id=$2';
+  const val = [data.pin, id];
+  db.query(q, val, (err, res)=>{
+    console.log(res);
+    if (res) {
+      cb(err, res);
+    }else{
+      cb(err);
+    }
   });
 };

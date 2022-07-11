@@ -4,7 +4,7 @@ const { validationResult } = require('express-validator');
 const errorResponse = require('../helpers/errorResponse');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const authModel = require('../models/authenticated');
 
 exports.register = (req, res) => {
   req.body.pin = null;
@@ -14,11 +14,12 @@ exports.register = (req, res) => {
     return response(res, 'There is an error', validation.array(), null, 400);
   }
   
-  userModel.createUser(req.body, (err, results) => {
+  authModel.register(req.body, (err) => {
     if (err) {
       console.log(err);
       return errorResponse(err, res);
     }
+    
     return response(res, 'Register success');
   });
 };
@@ -59,7 +60,7 @@ exports.login = (req, res) => {
         }
         return response(res, 'Email or password not match', null, null, 400);
       })
-      .catch(e => {
+      .catch(() => {
         return response(res, 'Email or password not match', null, null, 400);
       });
   });

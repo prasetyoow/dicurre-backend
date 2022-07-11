@@ -57,7 +57,7 @@ exports.editProfile = (id, data, picture, cb) => {
   const query = `UPDATE profile SET ${finalResult} WHERE id=$1 RETURNING *`;
   db.query(query, value, (err, res) => {
     if (res) {
-      cb(err, res);
+      cb(err, res.rows);
     } else {
       cb(err);
     }
@@ -72,3 +72,47 @@ exports.deleteProfile = (id, cb) => {
   });
 };
 
+
+exports.getProfileByUserId = (user_id, cb) => {
+  const q = 'SELECT * FROM profile WHERE user_id=$1';
+  const val = [user_id];
+  db.query(q, val, (err, res)=>{
+    cb(err, res);
+  });
+};
+
+exports.editProfileByUserId = (user_id, picture, data, cb)=>{
+  let val = [user_id];
+
+  const filtered = {};
+
+  const objt = {
+    picture,
+    fullname: data.fullname,
+    balance: data.balance,
+    phone_number: data.phone_number
+  };
+
+  for(let x in objt){
+    if (objt[x]!==null) {
+      filtered[x] = objt[x];
+      val.push(objt[x]);
+    }
+  }
+
+  const key = Object.keys(filtered);
+  const finalResult = key.map((o, ind)=> `${o}=$${ind+2}`);
+
+  const q = `UPDATE profile SET ${finalResult} WHERE user_id=$1 RETURNING *`;
+  db.query(q, val, (err, res)=>{
+    cb(err, res);
+  });
+};
+
+exports.changePhoneNumber = (id, data, cb) => {
+  const query = 'UPDATE profile SET phone_number=$1 WHERE user_id=$2';
+  const value = [data.phone_number, id];
+  db.query(query, value, (err, res) => {
+    cb(err, res);
+  });
+};
