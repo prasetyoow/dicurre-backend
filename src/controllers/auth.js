@@ -14,23 +14,33 @@ exports.register = (req, res) => {
     return response(res, 'There is an error', validation.array(), null, 400);
   }
   
-  authModel.register(req.body, (err) => {
+  authModel.register(req.body, (err, results) => {
     if (err) {
       console.log(err);
       return errorResponse(err, res);
     }
     
-    return response(res, 'Register success');
+    return response(res, 'Register success', results.rows[0]);
   });
 };
 
+// error 
 exports.createPin = (req, res) => {
   const {email} = req.body;
+  
+  const validation = validationResult(req);
+  if (!validation.isEmpty()) {
+    return response(res, 'There is an error', validation.array(), null, 400);
+  }
+
   userModel.getUserByEmail(email, (err, results) =>{
-    if (results.rows > 0) {
+    // bukan disini
+    console.log(results.rows);
+    if (results.rows.length > 0) {
+      console.log(results.rows);
       const user = results.rows[0];
       if (user.pin === null) {
-        userModel.updateUser(user.id, {pin: req.body.pin}, (err, resultUpdate) =>{
+        userModel.editUser(user.id, {pin: req.body.pin}, (err, resultUpdate) =>{
           const userUpdated = resultUpdate.rows[0];
           if (userUpdated.email === user.email) {
             return response(res, 'Create pin success');

@@ -77,7 +77,7 @@ exports.getProfileByUserId = (user_id, cb) => {
   const q = 'SELECT * FROM profile WHERE user_id=$1';
   const val = [user_id];
   db.query(q, val, (err, res)=>{
-    cb(err, res);
+    cb(err, res.rows);
   });
 };
 
@@ -88,8 +88,8 @@ exports.editProfileByUserId = (user_id, picture, data, cb)=>{
 
   const objt = {
     picture,
-    fullname: data.fullname,
     balance: data.balance,
+    fullname: data.fullname,
     phone_number: data.phone_number
   };
 
