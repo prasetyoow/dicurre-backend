@@ -33,14 +33,14 @@ exports.createPin = (req, res) => {
     return response(res, 'There is an error', validation.array(), null, 400);
   }
 
-  userModel.getUserByEmail(email, (err, results) =>{
+  userModel.getUserByEmail(email, (err, results) => {
     // bukan disini
     console.log(results.rows);
     if (results.rows.length > 0) {
       console.log(results.rows);
       const user = results.rows[0];
       if (user.pin === null) {
-        userModel.editUser(user.id, {pin: req.body.pin}, (err, resultUpdate) =>{
+        userModel.updateUserByEmail(email, req.body.pin, (err, resultUpdate) =>{
           const userUpdated = resultUpdate.rows[0];
           if (userUpdated.email === user.email) {
             return response(res, 'Create pin success');

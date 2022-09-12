@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const cors = require('cors');
 const express = require('express');
 const authMid = require('./src/middleware/auth');
 const app = express();
@@ -7,6 +8,8 @@ const app = express();
 global.__basepath = __dirname;
 
 app.use(express.urlencoded({extended: false}));
+app.use(cors());
+
 app.use('/public', express.static('assets'));
 app.get('/', (req, res) => {
   return res.json({

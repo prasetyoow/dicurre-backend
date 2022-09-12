@@ -43,6 +43,13 @@ exports.createUser = (data, cb) => {
   });
 };
 
+exports.updateUserByEmail = (email, pin, cb) => {
+  const query = 'UPDATE users SET pin = $1 WHERE email = $2 RETURNING *';
+  const value = [pin, email];
+  db.query(query, value, (err, res) => {
+    cb(err, res);
+  });
+};
 
 exports.editUser = (id, data, cb) => {
 

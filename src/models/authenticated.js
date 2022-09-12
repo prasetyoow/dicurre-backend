@@ -44,7 +44,7 @@ exports.trasfer = (sender_id, amount, data, cb)=> {
         } else {
           const editSenderProfile = 'UPDATE profile SET balance = balance - $1 WHERE user_id = $2';
           const valueSenderProfile = [amount, results.rows[0].sender_id];
-          db.query(editSenderProfile, valueSenderProfile, (err, results) => {
+          db.query(editSenderProfile, valueSenderProfile, (err) => {
             if (err){
               cb(err);
             } else {
@@ -95,13 +95,13 @@ exports.transfer = (sender_id, data, cb)=> {
         } else {
           const editSenderProfile = 'UPDATE profile SET balance = balance - $1 WHERE user_id = $2';
           const valueSenderProfile = [data.amount, res1.rows[0].sender_id];
-          db.query(editSenderProfile, valueSenderProfile, (err, res) => {
+          db.query(editSenderProfile, valueSenderProfile, (err) => {
             if (err) {
               cb(err);
             } else {
               const editReceiverProfile = 'UPDATE profile SET balance = balance + $1 WHERE user_id = $2';
               const valueSenderProfile = [data.amount, data.receiver_id];
-              db.query(editReceiverProfile, valueSenderProfile, (err, res)=>{
+              db.query(editReceiverProfile, valueSenderProfile, (err)=>{
                 if (err) {
                   cb(err);
                 }else {

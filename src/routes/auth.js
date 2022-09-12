@@ -55,11 +55,11 @@ const authChangePhoneNumber = [
   body('phone_number').isLength({min: 12}).withMessage('Phone number length minimal 12')
 ];
 
-auth.post('/register', authMid, ...authRegisValid, authController2.register);
-auth.post('/createPin', authMid, ...authCreatePinValid,  authController2.createPin);
+auth.post('/register', ...authRegisValid, authController2.register);
+auth.post('/createPin', ...authCreatePinValid,  authController2.createPin);
 auth.post('/login', ...authLoginValid,  authController2.login);
 auth.get('/profile', authMid, authController.getProfileByUserId);
-auth.get('/historyTransactions', authMid, authController, authController.getProfileByUserId);
+auth.get('/historyTransactions', authMid, authController.getProfileByUserId);
 auth.post('/transfer', authMid, authController.transfer);
 auth.post('/phone', authMid, authController.addPhone);
 auth.patch('/profile', authMid, uploadProfile, ...editAuthProfile, authController.editProfileByUserId);
