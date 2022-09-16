@@ -66,15 +66,16 @@ exports.editProfileByUserId = (req, res) => {
 
 exports.topUp = (req, res)=>{
   const receiver_id = req.authUser.id;
-  const {amount, type_id=2} = req.body;
-  profileModel.getProfileByUserId(receiver_id,(err, results)=>{
-    if(results.rows.length > 0){
-      const profile = results.rows[0];
-      authModel.topUp(receiver_id, amount, type_id, req.body, (err, results)=>{
+  const {amount, type_id = 2} = req.body;
+  profileModel.getProfileByUserId(receiver_id, (err, results) => {
+    console.log(results);
+    if(results.length > 0) {
+      //  
+      authModel.topUp(receiver_id, amount, req.body, type_id, (err, results) => {
         if (err) {
           return errorResponse(err, res);
         } else {
-          return response(res, `TopUp is successfully, balance left: Rp.${parseInt(profile.balance) + parseInt(results.rows[0].amount)}`, results.rows[0]);
+          return response(res, 'Top Up is successfully', results.rows[0]);
         }
       });
     } else {
@@ -82,6 +83,60 @@ exports.topUp = (req, res)=>{
     }
   });
 };
+
+// exports.transfer = (req, res) => {
+//   const sender_id = req.authUser.id;
+//   authModel.transfer(sender_id, req.body, (err, results)=>{
+//     if (err) {
+//       return errorResponse(err, res);
+//     } else {
+//       return response(res, 'Transfer success', results.rows[0]);
+//     }
+//   });
+// };
+
+exports.transfer = (req, res) => {
+  const sender_id = req.authUser.id;
+  profileModel.getLogedProfiles(sender_id, (err, results) => {
+    console.log(results.rows[0]);
+    const pinUser = results.rows[0].pin;
+    if(pinUser.length < 1) {
+      return res.redirect('/404');
+    }
+    else {
+      if (req.body.pin == pinUser) {
+        profileModel.getLogedProfiles(sender_id, (err, resultsMoney) => {
+          const myMoney = resultsMoney.rows[0];
+          console.log(myMoney);
+          console.log(req.body.amount);
+          if (resultsMoney.length < 1) {
+            return res.redirect('/404');
+          }
+          else {
+            console.log(myMoney.balance);
+            const slicedMoney = myMoney.balance.slice(2);
+            console.log(slicedMoney);
+            if(parseInt(slicedMoney) >= parseInt(req.body.amount)) {
+              authModel.transfer(sender_id, req.body, (err, results) => {
+                if (err) {
+                  return errorResponse(err,res);
+                }
+                else {
+                  return response(res, 'Transfer success', results.rows[0]);
+                }
+              });
+            } else {
+              return response(res, 'Not enough money', null, null, 404);
+            }
+          }
+        });
+      }else{return response(res, 'Pin doesnt match', null, null, 404);
+      }
+    }
+  });
+
+};
+
 
 exports.changePassword = (req, res) => {
   const user_id = parseInt(req.authUser.id);
@@ -132,18 +187,6 @@ exports.changePhoneNumber = (req, res) => {
     }
   });
 };
-
-exports.transfer = (req, res)=>{
-  const sender_id = req.authUser.id;
-  authModel.transfer(sender_id, req.body, (err, results)=>{
-    if (err) {
-      return errorResponse(err, res);
-    } else {
-      return response(res, 'Transfer success', results.rows[0]);
-    }
-  });
-};
-
 
 exports.historyTransactions = (req, res) =>{
   const id = parseInt(req.authUser.id);

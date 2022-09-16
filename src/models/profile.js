@@ -116,3 +116,11 @@ exports.changePhoneNumber = (id, data, cb) => {
     cb(err, res);
   });
 };
+
+exports.getLogedProfiles = (id, cb) => {
+  const q = 'SELECT * FROM profile join users on profile.user_id=users.id WHERE user_id=$1';
+  const val = [id];
+  db.query(q, val, (err, res) => {
+    cb(err, res);
+  });
+};

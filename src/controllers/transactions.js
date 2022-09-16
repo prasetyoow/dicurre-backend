@@ -16,8 +16,6 @@ exports.getTransactionsById = (req, res)=>{
   });
 };
 
-
-
 exports.createTransactions = [
   body('time').isISO8601().withMessage('Date format invalid (ISO8601)'),
   (req, res) => {

@@ -75,3 +75,20 @@ exports.login = (req, res) => {
       });
   });
 };
+
+exports.resetPassword = (req, res) => {
+  const {email, newPassword} = req.body;
+  userModel.getUserByEmail(email, (err, results) => {
+    if (results.rows.length > 0) {
+      userModel.resetPassword(email, newPassword, (err) => {
+        if (err) {
+          return errorResponse(err, res);
+        }else {
+          return response(res, 'Password just got reset!');
+        }
+      });
+    }else {
+      return response(res, 'Error: Email does not exist', null, null, 400);
+    }
+  });
+};
