@@ -56,3 +56,6 @@ A backend program for Dicurre website and application. An e-wallet website and a
 |/auth/phone| PATCH |Update or change new phone number or user |
 |/auth/topup| POST |To Top up balance for user login |
 |/auth/transfer| POST |To Transfer money to another user |
+
+## **Licenses**
+&copy;  [Wahyu Prasetyo](https://github.com/prasetyoow)
