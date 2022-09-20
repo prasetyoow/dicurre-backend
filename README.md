@@ -21,6 +21,8 @@ A backend program for Dicurre website and application. An e-wallet website and a
 2. Package Manager
     * [NPM](https://www.npmjs.com/ "NPM")
     * [Yarn](https://yarnpkg.com/ "Yarn")
+3. Postman Collection
+    * [Download Here](https://drive.google.com/file/d/11fgJMPJXAFRh7u7LW1W-_or19OGAuA8t/view)
 
 ## **How to Install**
 1. Download this repository or clone on your IDE ```https://github.com/prasetyoow/fw9-backend-dicurre.git```
