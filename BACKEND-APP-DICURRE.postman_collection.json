@@ -1,0 +1,1111 @@
+{
+	"info": {
+		"_postman_id": "2929813a-bb1a-4e7c-95f5-3ae7f685786f",
+		"name": "BACKEND-APP-DICURRE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18171593"
+	},
+	"item": [
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "USERS",
+					"item": [
+						{
+							"name": "GET ALL USERS",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url\n}}/users",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "bisa",
+											"description": "by email",
+											"disabled": true
+										},
+										{
+											"key": "limit",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET USER BY ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url\n}}/users/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE USER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "ramdhangalak@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "ngasalaja",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "prase",
+											"type": "text"
+										},
+										{
+											"key": "pin",
+											"value": "123456",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/users",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE USER",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "sekarangganti@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "prasetyo",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "beelzezz",
+											"type": "text"
+										},
+										{
+											"key": "pin",
+											"value": "123455",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/users/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE USER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url\n}}/users/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "29"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "PROFILE",
+					"item": [
+						{
+							"name": "GET ALL PROFILE",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url\n}}/profile",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GET PROILE BY ID",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{url\n}}/profile/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE PROFILE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullname",
+											"value": "Muhammad Goku",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "0284535786542",
+											"type": "text"
+										},
+										{
+											"key": "balance",
+											"value": "312300",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": "/C:/Users/62896/Pictures/testing/goku.jpg"
+										},
+										{
+											"key": "user_id",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/profile",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE PROFILE",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "fullname",
+											"value": "Vegeta Go",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "0895574852346",
+											"type": "text"
+										},
+										{
+											"key": "balance",
+											"value": "2544552",
+											"type": "text"
+										},
+										{
+											"key": "picture",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "user_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/profile/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "24"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE PROFILE",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url\n}}/profile/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"profile",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "48"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TRANSACTION",
+					"item": [
+						{
+							"name": "GET ALL TRANSACTIONS",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "{{url\n}}/transactions",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE TRANSACTIONS",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "1500000",
+											"type": "text"
+										},
+										{
+											"key": "receiver_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "sender_id",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "notes",
+											"value": "Monthly allowance",
+											"type": "text"
+										},
+										{
+											"key": "time",
+											"value": "2022-07-06",
+											"type": "text"
+										},
+										{
+											"key": "type_id",
+											"value": "3",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/transactions",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE TRANSACTIONS",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "amount",
+											"value": "150000",
+											"type": "text"
+										},
+										{
+											"key": "receiver_id",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "sender_id",
+											"value": "3",
+											"type": "text"
+										},
+										{
+											"key": "notes",
+											"value": "Weekly allowance",
+											"type": "text"
+										},
+										{
+											"key": "time",
+											"value": "2022-07-06",
+											"type": "text"
+										},
+										{
+											"key": "type_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/transactions/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transactions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE TRANSACTIONS",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url\n}}/transactions/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transactions",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "9"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TRANSACTION TYPE",
+					"item": [
+						{
+							"name": "GET ALL TRANSACTION TYPE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url\n}}/transaction_type",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transaction_type"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CREATE TRANSACTION TYPE",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "testing",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "subcription",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/transaction_type",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transaction_type"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UPDATE TRANSACTION TYPE",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "setelah ganti",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "transfer",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url\n}}/transaction_type/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transaction_type",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE TRANSACTION TYPE",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url\n}}/transaction_type/:id",
+									"host": [
+										"{{url\n}}"
+									],
+									"path": [
+										"transaction_type",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AUTHENTICATION",
+			"item": [
+				{
+					"name": "REGISTER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "testnative",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "testnative123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/register",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LOGIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "nativetest@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/login",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE PIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "prastest@xyz.com",
+									"type": "text"
+								},
+								{
+									"key": "pin",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/createPin",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"createPin"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AUNTHETICATED",
+			"item": [
+				{
+					"name": "ADD PHONE NUMBER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phone_number",
+									"value": "098765123457",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/phone",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"phone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SHOW PROFILE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url\n}}/auth/profile",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE PROFILE",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "fullname",
+									"value": "React Test",
+									"type": "text"
+								},
+								{
+									"key": "balance",
+									"value": "50000",
+									"type": "text"
+								},
+								{
+									"key": "picture",
+									"type": "file",
+									"src": "/C:/Users/62896/Pictures/20201102_214334.jpg"
+								},
+								{
+									"key": "phone_number",
+									"value": "089554326495",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/profile",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CHANGE PASSWORD",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "password",
+									"value": "ngasalaja",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/changePassword",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CHANGE PIN",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "pin",
+									"value": "789456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/changePIN",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"changePIN"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CHANGE PHONE NUMBER",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "phone_number",
+									"value": "0894542187645",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/phone",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"phone"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TOPUP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "500000",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "top up",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "2022-12-09",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/topup",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"topup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "TRANSFER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "amount",
+									"value": "100",
+									"type": "text"
+								},
+								{
+									"key": "receiver_id",
+									"value": "66",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "bayar hutang",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "2022-12-09",
+									"type": "text"
+								},
+								{
+									"key": "type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "pin",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url\n}}/auth/transfer",
+							"host": [
+								"{{url\n}}"
+							],
+							"path": [
+								"auth",
+								"transfer"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "HISTORY TRANSACTION",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
