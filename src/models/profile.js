@@ -1,8 +1,26 @@
 const db = require('../helpers/db');
+const {LIMIT_DATA} = process.env;
+// exports.getAllProfile = (cb) => {
+//   db.query('SELECT * FROM profile', (err, res) => {
+//     cb(res.rows);
+//   });
+// };
 
-exports.getAllProfile = (cb) => {
-  db.query('SELECT * FROM profile', (err, res) => {
-    cb(res.rows);
+exports.getAllProfile = (searchBy, keyword, orderBy, sortType, limit = parseInt(LIMIT_DATA), offset = 0, cb)=>{
+  const q = `SELECT * FROM profile WHERE ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
+  const val = [limit, offset];
+  db.query(q, val, (err, res) => {
+    if (res) {
+      cb(err, res.rows);
+    }else{
+      cb(err);
+    }
+  });
+};
+
+exports.countAllProfile = (keyword, cb)=>{
+  db.query(`SELECT * FROM profile WHERE fullname LIKE '%${keyword}%'`, (err, res)=>{
+    cb(err, res.rowCount);
   });
 };
 
@@ -74,7 +92,7 @@ exports.deleteProfile = (id, cb) => {
 
 
 exports.getProfileByUserId = (user_id, cb) => {
-  const q = 'SELECT * FROM profile WHERE user_id=$1';
+  const q = 'SELECT fullname, phone_number, picture, balance FROM profile WHERE user_id=$1';
   const val = [user_id];
   db.query(q, val, (err, res)=>{
     cb(err, res.rows);

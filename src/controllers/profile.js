@@ -2,10 +2,31 @@ const { validationResult } = require('express-validator');
 const errorResponse = require('../helpers/errorResponse');
 const response = require('../helpers/standardResponse');
 const profileModel = require('../models/profile');
+const {LIMIT_DATA} = process.env;
+
+// exports.getAllProfile = (req, res) => {
+//   profileModel.getAllProfile((results) => {
+//     return response(res, 'List of profiles', results);
+//   });
+// };
 
 exports.getAllProfile = (req, res) => {
-  profileModel.getAllProfile((results) => {
-    return response(res, 'List of profiles', results);
+  const {searchBy='', search='', orderBy='id', sortType='ASC', limit=parseInt(LIMIT_DATA), page=1} = req.query;
+  const offset = (page - 1) * limit;
+  profileModel.getAllProfile(searchBy === null ? 'fullname' : searchBy === undefined ? 'fullname' : searchBy === '' ? 'fullname': searchBy, search, orderBy === null ? 'id': orderBy === undefined ? 'id': orderBy, sortType === null ? 'fullname' : sortType === undefined ? 'fullname' : sortType === '' ? 'fullname' : sortType, limit, offset, (err, results) => {
+    if (results?.length < 1) {
+      return res.redirect('/404');
+    }
+    const pageInfo = {};
+
+    profileModel.countAllProfile(search, (err, totalData) =>{
+      pageInfo.totalData = totalData;
+      pageInfo.totalPage = Math.ceil(totalData/limit);
+      pageInfo.currentPage = parseInt(page);
+      pageInfo.nextPage = pageInfo.currentPage < pageInfo.totalPage ? pageInfo.currentPage + 1 : null;
+      pageInfo.prevPage = pageInfo.currentPage > 1 ? pageInfo.currentPage - 1 : null;
+      return response(res, 'List of profiles', results, pageInfo);
+    });  
   });
 };
 
