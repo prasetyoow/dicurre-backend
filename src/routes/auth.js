@@ -74,7 +74,7 @@ auth.post('/resetpassword', ...authResetPassword, authMid, authController2.reset
 
 // Authenticated
 auth.get('/profile', authMid, authController.getProfileByUserId);
-auth.get('/historyTransactions', authMid, authController.getProfileByUserId);
+auth.get('/historyTransactions', authMid, authController.historyTransactions);
 auth.post('/transfer', authMid, authController.transfer);
 auth.post('/topup', authMid, authController.topUp);
 auth.post('/phone', authMid, authController.addPhone);
