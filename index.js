@@ -39,7 +39,7 @@ app.post('/', (req, res) => {
 
 app.use('*', (req, res) => {
   return res.status(404).send({
-    succes: false,
+    success: false,
     message: 'Resource not found'
   });
 });
