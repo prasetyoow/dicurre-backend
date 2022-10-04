@@ -55,6 +55,7 @@ exports.transfer = (sender_id, data, cb) => {
                   cb(err);
                 }else {
                   cb(err, results);
+                  console.log(err + ' ini error dari models');
                   db.query('COMMIT', err => {
                     if (err) {
                       console.error('Error transfer', err.stack);
@@ -115,8 +116,8 @@ exports.addPhone = (user_id, data, cb) => {
   });
 };
 
-exports.historyTransactions = (id, searchBy, keyword, orderBy, sortType, limit=parseInt(LIMIT_DATA), offset = 0, cb)=>{
-  const q = `SELECT * FROM transactions WHERE recipient_id=${id} OR sender_id=${id} AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
+exports.historyTransactions = (id, searchBy, keyword, orderBy, sortType, limit = parseInt(LIMIT_DATA), offset = 0, cb)=>{
+  const q = `SELECT * FROM transaction WHERE receiver_id=${id} OR sender_id=${id} AND ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
   const val = [limit, offset];
   db.query(q, val, (err, res)=>{
     if (res) {
@@ -127,8 +128,29 @@ exports.historyTransactions = (id, searchBy, keyword, orderBy, sortType, limit=p
   });
 };
 
-exports.countHistoryTransactions = (id, searchBy, keyword, cb)=>{
-  db.query(`SELECT * FROM transactions WHERE recipient_id=${id} OR sender_id=${id} AND ${searchBy} LIKE '%${keyword}%'`, (err, res)=>{
+exports.countAllHistoryTransactions = (id, cb)=>{
+  db.query(`SELECT * FROM transaction WHERE receiver_id=${id} OR sender_id=${id}`, (err, res) => {
     cb(err, res.rowCount);
+  });
+};
+
+// exports.getHistoryFix=(id, searchBy, keyword, orderBy, sortType, limit, offset = 0, cb)=>{
+//   db.query(`SELECT transaction.id, t1.username sender, t2.username receiver, transaction.receiver_id, amount, t3.name type, time, t4.picture picture FROM transaction FULL OUTER JOIN users t1 on t1.id=transaction.sender_id FULL OUTER JOIN users t2 on t2.id=transaction.receiver_id JOIN profile t4 on t4.user_id=t2.id FULL OUTER JOIN transaction_type t3 on t3.id=transaction.type_id WHERE transaction.sender_id = ${id} OR transaction.receiver_id = ${id} ORDER BY ${orderBy} ${sortType} limit ${limit} offset ${offset}`, (err, res) => {
+//     console.log(err);
+//     cb(err, res);
+//   });
+// };
+
+// SELECT transaction.id, transaction.amount, transaction.receiver_id, transaction.sender_id, transaction.notes, transaction.note, transaction_type.name
+
+// penerima.fullname, penerima.phone_number, penerima.picture, penerima.user_id
+// pengirim.fullname, pengirim.phone_number, pengirim.picture, pengirim.user_id
+
+// SELECT transaction.id, transaction.amount, transaction.notes, transaction.time, transaction_type.name, penerima.fullname, penerima.phone_number, penerima.picture, penerima.user_id, pengirim.fullname, pengirim.phone_number, pengirim.picture, pengirim.user_id FROM transacion FULL OUTER JOIN transaction_type ON transaction_type.id = transaction.type_id FULL OUTER JOIN profile penerima ON penerima.user_id = transaction.receiver_id FULL OUTER JOIN profile pengirim ON pengirim.user_id = transaction.sender_id WHERE transaction.receiver_id = ${id} OR transaction.sender_id = ${id} ORDER BY ${orderBy} ${sortType} limit ${limit} offset ${offset},
+
+exports.getHistoryFix=(id, orderBy, sortType, limit, offset = 0, cb)=>{
+  db.query(`SELECT transaction.id, transaction.amount, transaction.notes, transaction.time, transaction_type.name tipe_transaksi, penerima.fullname penerima_fullname, penerima.phone_number penerima_phone, penerima.picture penerima_photo, penerima.user_id penerima_id, pengirim.fullname pengirim_fullname, pengirim.phone_number pengirim_phone, pengirim.picture pengirim_photo, pengirim.user_id pengirim_id FROM transaction FULL OUTER JOIN transaction_type ON transaction_type.id = transaction.type_id FULL OUTER JOIN profile penerima ON penerima.user_id = transaction.receiver_id FULL OUTER JOIN profile pengirim ON pengirim.user_id = transaction.sender_id WHERE transaction.receiver_id = ${id} OR transaction.sender_id = ${id} ORDER BY ${orderBy} ${sortType} limit ${limit} offset ${offset}`, (err, res) => {
+    console.log(err);
+    cb(err, res.rows);
   });
 };
