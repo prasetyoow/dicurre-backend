@@ -16,7 +16,6 @@ exports.register = (req, res) => {
   
   authModel.register(req.body, (err, results) => {
     if (err) {
-      console.log(err);
       return errorResponse(err, res);
     }
     
@@ -35,9 +34,7 @@ exports.createPin = (req, res) => {
 
   userModel.getUserByEmail(email, (err, results) => {
     // bukan disini
-    console.log(results.rows);
-    if (results.rows.length > 0) {
-      console.log(results.rows);
+    if (results.rows.length > 0) {     
       const user = results.rows[0];
       if (user.pin === null) {
         userModel.updateUserByEmail(email, req.body.pin, (err, resultUpdate) =>{

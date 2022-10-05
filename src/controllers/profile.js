@@ -4,12 +4,6 @@ const response = require('../helpers/standardResponse');
 const profileModel = require('../models/profile');
 const {LIMIT_DATA} = process.env;
 
-// exports.getAllProfile = (req, res) => {
-//   profileModel.getAllProfile((results) => {
-//     return response(res, 'List of profiles', results);
-//   });
-// };
-
 exports.getAllProfile = (req, res) => {
   const {searchBy='', search='', orderBy='id', sortType='ASC', limit=parseInt(LIMIT_DATA), page=1} = req.query;
   const offset = (page - 1) * limit;
@@ -20,6 +14,7 @@ exports.getAllProfile = (req, res) => {
     const pageInfo = {};
 
     profileModel.countAllProfile(search, (err, totalData) =>{
+      console.log('test dr controllers');
       pageInfo.totalData = totalData;
       pageInfo.totalPage = Math.ceil(totalData/limit);
       pageInfo.currentPage = parseInt(page);

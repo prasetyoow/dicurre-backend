@@ -9,7 +9,6 @@ const {LIMIT_DATA} = process.env;
 exports.getProfileByUserId = (req, res)=>{
   const user_id = parseInt(req.authUser.id);
   profileModel.getProfileByUserId(user_id, (err, results)=>{
-    // console.log(results);
     return response(res, 'Got the profile', results[0]);
   });
 };
@@ -23,7 +22,6 @@ exports.addPhone = (req, res) => {
   }
 
   profileModel.getProfileByUserId(user_id, (err, results) =>{
-    console.log(results);
     if (results.length > 0) {
       const profile = results[0];
       if (profile.phone_number === null) {
@@ -67,7 +65,6 @@ exports.topUp = (req, res)=>{
   const receiver_id = req.authUser.id;
   const {amount, type_id = 4} = req.body;
   profileModel.getProfileByUserId(receiver_id, (err, results) => {
-    console.log(results);
     if(results.length > 0) {
       //  
       authModel.topUp(receiver_id, amount, req.body, type_id, (err, results) => {
@@ -86,7 +83,6 @@ exports.topUp = (req, res)=>{
 exports.transfer = (req, res) => {
   const sender_id = req.authUser.id;
   profileModel.getLogedProfiles(sender_id, (err, results) => {
-    console.log(results.rows[0]);
     const pinUser = results.rows[0].pin;
     if(pinUser.length < 1) {
       return res.redirect('/404');
@@ -95,23 +91,19 @@ exports.transfer = (req, res) => {
       if (req.body.pin == pinUser) {
         profileModel.getLogedProfiles(sender_id, (err, resultsMoney) => {
           const myMoney = resultsMoney.rows[0];
-          console.log(myMoney + ' ini money awal');
-          console.log(req.body.amount + ' ini duit transfer');
           if (resultsMoney.length < 1) {
             return res.redirect('/404');
           }
           else {
-            console.log(myMoney.balance + ' ini myMoney.balance');
             const slicedMoney = myMoney.balance.slice(2).replace('.', '')
               .replace('.', '');
-            console.log(slicedMoney + ' ini sliced money');
             if(parseInt(slicedMoney) >= parseInt(req.body.amount)) {
               authModel.transfer(sender_id, req.body, (err, results) => {
                 if (err) {
                   return errorResponse(err,res);
                 }
                 else {
-                  return response(res, 'Transfer success', results.rows[0]);
+                  return response(res, 'Transfer successfully', results.rows[0]);
                 }
               });
             } else {
@@ -169,7 +161,6 @@ exports.changePhoneNumber = (req, res) => {
   }
 
   profileModel.changePhoneNumber(user_id, req.body, (err) => {
-    // console.log(res);
     if (err) {
       return errorResponse(err, res);
     } else {
@@ -183,8 +174,6 @@ exports.historyTransactions = (req, res) => {
   const {sortBy = 'id', sortType='ASC', limit = parseInt(LIMIT_DATA), page = 1} = req.query;
   const offset = (page - 1) * limit;
   authModel.getHistoryFix(id, sortBy, sortType, limit, offset, (err, results) => {
-    // console.log(err + ' ini error');
-    // console.log(results + ' ini results');
     if (results.length < 1) {
       return res.redirect('/404');
     }

@@ -1,13 +1,8 @@
 const db = require('../helpers/db');
 const {LIMIT_DATA} = process.env;
-// exports.getAllProfile = (cb) => {
-//   db.query('SELECT * FROM profile', (err, res) => {
-//     cb(res.rows);
-//   });
-// };
 
 exports.getAllProfile = (searchBy, keyword, orderBy, sortType, limit = parseInt(LIMIT_DATA), offset = 0, cb)=>{
-  const q = `SELECT * FROM profile WHERE ${searchBy} LIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
+  const q = `SELECT * FROM profile WHERE ${searchBy} ILIKE '%${keyword}%' ORDER BY ${orderBy} ${sortType} LIMIT $1 OFFSET $2`;
   const val = [limit, offset];
   db.query(q, val, (err, res) => {
     if (res) {
@@ -18,8 +13,8 @@ exports.getAllProfile = (searchBy, keyword, orderBy, sortType, limit = parseInt(
   });
 };
 
-exports.countAllProfile = (keyword, cb)=>{
-  db.query(`SELECT * FROM profile WHERE fullname LIKE '%${keyword}%'`, (err, res)=>{
+exports.countAllProfile = (keyword, cb) => {
+  db.query(`SELECT * FROM profile WHERE fullname ILIKE '%${keyword}%'`, (err, res) => {
     cb(err, res.rowCount);
   });
 };
@@ -32,11 +27,11 @@ exports.getProfileById = (id, cb) => {
   });
 };
 
-exports.countAllProfile = (keyword, cb)=>{
-  db.query(`SELECT * FROM profile WHERE fullname LIKE '%${keyword}%'`, (err, res)=>{
-    cb(err, res.rowCount);
-  });
-};
+// exports.countAllProfile = (keyword, cb)=>{
+//   db.query(`SELECT * FROM profile WHERE fullname LIKE '%${keyword}%'`, (err, res)=>{
+//     cb(err, res.rowCount);
+//   });
+// };
 
 exports.createProfile = (data, picture, cb) => {
   const query = 'INSERT INTO profile (fullname, phone_number, balance, picture, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING *';
