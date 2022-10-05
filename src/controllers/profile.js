@@ -13,8 +13,7 @@ exports.getAllProfile = (req, res) => {
     }
     const pageInfo = {};
 
-    profileModel.countAllProfile(search, (err, totalData) =>{
-      console.log('test dr controllers');
+    profileModel.countAllProfile(search, (err, totalData) => {
       pageInfo.totalData = totalData;
       pageInfo.totalPage = Math.ceil(totalData/limit);
       pageInfo.currentPage = parseInt(page);
