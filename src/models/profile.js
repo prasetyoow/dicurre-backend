@@ -94,11 +94,14 @@ exports.getProfileByUserId = (user_id, cb) => {
   });
 };
 
-exports.editProfileByUserId = (user_id, picture, data, cb)=>{
+exports.editProfileByUserId = (user_id, picture, data, cb) => {
   let val = [user_id];
 
   const filtered = {};
 
+  console.log(data.balance);
+  console.log(data.fullname);
+  console.log(data.phone_number);
   const objt = {
     picture,
     balance: data.balance,
@@ -107,9 +110,12 @@ exports.editProfileByUserId = (user_id, picture, data, cb)=>{
   };
 
   for(let x in objt){
-    if (objt[x]!==null) {
-      filtered[x] = objt[x];
-      val.push(objt[x]);
+    if(objt[x]!==null){
+      if(objt[x]!==undefined){
+        console.log(objt[x]);
+        filtered[x]=objt[x];
+        val.push(objt[x]);
+      }
     }
   }
 

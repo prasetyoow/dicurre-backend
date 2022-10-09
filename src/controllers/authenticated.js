@@ -8,8 +8,8 @@ const {LIMIT_DATA} = process.env;
 
 exports.getProfileByUserId = (req, res)=>{
   const user_id = parseInt(req.authUser.id);
-  profileModel.getProfileByUserId(user_id, (err, results)=>{
-    return response(res, 'Got the profile', results[0]);
+  profileModel.getLogedProfiles(user_id, (err, results)=>{
+    return response(res, 'Got the profile', results.rows[0]);
   });
 };
 
@@ -44,8 +44,9 @@ exports.editProfileByUserId = (req, res) => {
   const user_id = parseInt(req.authUser.id);
   let filename = null; 
 
+  console.log(req.file);
   if (req.file) {
-    filename = req.file.filename;
+    filename = req.file.path;
   }
   const validation = validationResult(req);
 
@@ -54,6 +55,7 @@ exports.editProfileByUserId = (req, res) => {
   }
 
   profileModel.editProfileByUserId(user_id, filename, req.body, (err, results) => {
+    console.log(err);
     if (err) {
       return errorResponse(res, `Failed to update: ${err.message}`, null, null, 400);
     }

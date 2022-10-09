@@ -44,8 +44,8 @@ const authResetPassword = [
 
 // Authenticated
 const editAuthProfile = [
-  body('fullname').isLength({min: 7}).withMessage('Fullname length minimal 7'),
-  body('phone_number').isLength({min: 12}).withMessage('Phone number length minimal 12')
+  body('fullname').isLength({min: 5}).withMessage('Fullname length minimal 5').optional(),
+  body('phone_number').isLength({min: 12}).withMessage('Phone number length minimal 12').optional()
 ];
 
 const authChangePassword = [
