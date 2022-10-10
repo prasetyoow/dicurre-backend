@@ -136,3 +136,11 @@ exports.getHistoryFix=(id, orderBy, sortType, limit, offset = 0, cb)=>{
     cb(err, res.rows);
   });
 };
+
+exports.getTransactionsById = (id, cb) => {
+  const q = 'SELECT * FROM transaction WHERE id=$1';
+  const val = [id];
+  db.query(q, val, (err, res)=>{
+    cb(res.rows);
+  });
+};

@@ -82,5 +82,6 @@ auth.patch('/profile', authMid, uploadProfile, ...editAuthProfile, authControlle
 auth.patch('/changePassword', authMid, ...authChangePassword, authController.changePassword);
 auth.patch('/changePin', authMid, ...authChangePin, authController.changePin);
 auth.patch('/phone', authMid, ...authChangePhoneNumber, authController.changePhoneNumber);
+auth.get('/historyTransactions/:id', authMid, authController.getTransactionsById);
 
 module.exports = auth;

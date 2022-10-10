@@ -190,3 +190,10 @@ exports.historyTransactions = (req, res) => {
     });
   });
 };
+
+exports.getTransactionsById = (req, res)=>{
+  const {id} = req.params;
+  authModel.getTransactionsById(id, (results)=>{
+    return response(res, 'Got the Transactions', results[0]);
+  });
+};

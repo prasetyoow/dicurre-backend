@@ -6,15 +6,6 @@ exports.getAllTransactions = (cb) => {
   });
 };
 
-exports.getTransactionsById = (id, cb) => {
-  const q = 'SELECT * FROM transaction WHERE id=$1';
-  const val = [id];
-  db.query(q, val, (err, res)=>{
-    cb(res.rows);
-  });
-};
-
-
 exports.createTransactions = (data, cb) => {
   const query = 'INSERT INTO transaction (amount, receiver_id, sender_id, notes, time, type_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
   const value = [data.amount, data.receiver_id, data.sender_id, data.notes, data.time, data.type_id];

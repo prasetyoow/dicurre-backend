@@ -9,13 +9,6 @@ exports.getAllTransactions = (req, res) => {
   });
 };
 
-exports.getTransactionsById = (req, res)=>{
-  const {id} = req.params;
-  transactionsModel.getTransactionsById(id, (results)=>{
-    return response(res, 'Got the Transactions', results[0]);
-  });
-};
-
 exports.createTransactions = [
   body('time').isISO8601().withMessage('Date format invalid (ISO8601)'),
   (req, res) => {
