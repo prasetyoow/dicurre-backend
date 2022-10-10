@@ -71,6 +71,7 @@ exports.topUp = (req, res)=>{
       //  
       authModel.topUp(receiver_id, amount, req.body, type_id, (err, results) => {
         if (err) {
+          console.log(err);
           return errorResponse(err, res);
         } else {
           return response(res, 'Top Up is successfully', results.rows[0]);
@@ -93,13 +94,13 @@ exports.transfer = (req, res) => {
       if (req.body.pin == pinUser) {
         profileModel.getLogedProfiles(sender_id, (err, resultsMoney) => {
           const myMoney = resultsMoney.rows[0];
+          console.log(myMoney);
+          console.log(req.body.amount);
           if (resultsMoney.length < 1) {
             return res.redirect('/404');
           }
           else {
-            const slicedMoney = myMoney.balance.slice(2).replace('.', '')
-              .replace('.', '');
-            if(parseInt(slicedMoney) >= parseInt(req.body.amount)) {
+            if(parseInt(myMoney.balance) >= parseInt(req.body.amount)) {
               authModel.transfer(sender_id, req.body, (err, results) => {
                 if (err) {
                   return errorResponse(err,res);
