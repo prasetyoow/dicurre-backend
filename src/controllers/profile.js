@@ -19,7 +19,7 @@ exports.getAllProfile = (req, res) => {
       pageInfo.currentPage = parseInt(page);
       pageInfo.nextPage = pageInfo.currentPage < pageInfo.totalPage ? pageInfo.currentPage + 1 : null;
       pageInfo.prevPage = pageInfo.currentPage > 1 ? pageInfo.currentPage - 1 : null;
-      return response(res, 'List of profiles', results, pageInfo);
+      return response(res, 'List of profiles', results? results : 'empty', pageInfo);
     });  
   });
 };
