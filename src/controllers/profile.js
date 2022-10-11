@@ -8,9 +8,9 @@ exports.getAllProfile = (req, res) => {
   const {searchBy='', search='', orderBy='id', sortType='ASC', limit=parseInt(LIMIT_DATA), page=1} = req.query;
   const offset = (page - 1) * limit;
   profileModel.getAllProfile(searchBy === null ? 'fullname' : searchBy === undefined ? 'fullname' : searchBy === '' ? 'fullname': searchBy, search, orderBy === null ? 'id': orderBy === undefined ? 'id': orderBy, sortType === null ? 'fullname' : sortType === undefined ? 'fullname' : sortType === '' ? 'fullname' : sortType, limit, offset, (err, results) => {
-    if (results?.length < 1) {
-      return res.redirect('/404');
-    }
+    // if (results?.length < 1) {
+    //   return res.redirect('/404');
+    // }
     const pageInfo = {};
 
     profileModel.countAllProfile(search, (err, totalData) => {
