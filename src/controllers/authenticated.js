@@ -102,6 +102,7 @@ exports.transfer = (req, res) => {
           else {
             if(parseInt(myMoney.balance) >= parseInt(req.body.amount)) {
               authModel.transfer(sender_id, req.body, (err, results) => {
+                console.log(err);
                 if (err) {
                   return errorResponse(err,res);
                 }
@@ -174,7 +175,7 @@ exports.changePhoneNumber = (req, res) => {
 
 exports.historyTransactions = (req, res) => {
   const id = parseInt(req.authUser.id);
-  const {sortBy = 'id', sortType='ASC', limit = parseInt(LIMIT_DATA), page = 1} = req.query;
+  const {sortBy = 'id', sortType='DESC', limit = parseInt(LIMIT_DATA), page = 1} = req.query;
   const offset = (page - 1) * limit;
   authModel.getHistoryFix(id, sortBy, sortType, limit, offset, (err, results) => {
     if (results.length < 1) {
