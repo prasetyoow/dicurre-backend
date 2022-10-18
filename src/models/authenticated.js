@@ -76,13 +76,13 @@ exports.topUp = (receiver_id, amount, data, type_id, cb)=> {
       cb(err);
     } else {
       const q = 'INSERT INTO transaction(amount, receiver_id, notes, time, type_id) VALUES ($1, $2, $3, $4, $5) RETURNING id, amount, receiver_id, notes, time, type_id';
-      const val =[parseInt(amount), receiver_id, data.notes, data.time, type_id];
+      const val =[amount, receiver_id, data.notes, data.time, type_id];
       db.query(q, val, (err, results) => {
         if (err){
           cb(err);
         } else {
           const editSenderProfile = 'UPDATE profile SET balance = balance + $1 WHERE user_id = $2';
-          const valueSenderProfile = [parseInt(amount), results.rows[0].receiver_id];
+          const valueSenderProfile = [amount, results.rows[0].receiver_id];
           db.query(editSenderProfile, valueSenderProfile, (err) => {
             if (err){
               cb(err);
